@@ -14,22 +14,23 @@ class ConversationController extends Controller
         return view('conversations.create', compact('customer'));
     }
 
-    public function store(Request $request, Customer $customer)
-    {
-        $request->validate([
-            'time' => 'required|date',
-            'communication_medium' => 'required|in:Call,Email,SMS',
-            'message' => 'required|string',
-        ]);
+   public function store(Request $request, Customer $customer)
+{
+    $request->validate([
+        'time' => 'required|date',
+        'communication_medium' => 'required|in:Call,Email,SMS',
+        'message' => 'required|string',
+    ]);
 
-       
-        $conversation = $customer->conversations()->create([
-            'time' => $request->time,
-            'communication_medium' => $request->communication_medium,
-            'message' => $request->message,
-        ]);
+    $conversation = $customer->conversations()->create([
+        'time' => $request->time,
+        'communication_medium' => $request->communication_medium,
+        'message' => $request->message,
+    ]);
 
-       
-        return redirect()->route('customers.show', $customer)->with('success', 'Conversation added successfully.');
-    }
+   
+    Mail::to($customer->email)->send(new ConversationNotificationMail($customer, $conversation));
+
+    return redirect()->route('customers.show', $customer)->with('success', 'Conversation added and email sent successfully.');
+}
 }
