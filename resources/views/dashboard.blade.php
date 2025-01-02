@@ -11,7 +11,11 @@
         <!-- Dashboard Header -->
         <h1 class="text-center mb-4">Welcome to the Dashboard</h1>
 
-        
+        <!-- Navigation Links -->
+        <div class="text-center mb-4">
+            <a href="{{ route('customers.index') }}" class="btn btn-primary">Manage Customers</a>
+            <a href="{{ route('customers.create') }}" class="btn btn-success">Add New Customer</a>
+        </div>
 
         <!-- Logout Button -->
         <div class="text-center">
