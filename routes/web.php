@@ -5,11 +5,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ConversationController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/signup', [AuthController::class, 'showSignUpForm'])->name('signup');
+
+Route::get('/', [AuthController::class, 'showSignUpForm'])->name('signup');
 Route::post('/signup', [AuthController::class, 'register'])->name('register');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
